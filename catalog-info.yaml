@@ -6,6 +6,6 @@ metadata:
     github.com/project-slug: dlopezby93/digital-femsa-gaia
     asyncapi.io/documentation: './asyncapi.yaml'
 spec:
-  type: other
+  type: service
   lifecycle: unknown
   owner: 11pili-rose
