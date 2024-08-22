@@ -1,11 +1,12 @@
 apiVersion: backstage.io/v1alpha1
-kind: Component
+kind: API
 metadata:
   name: digital-femsa-gaia
   annotations:
     github.com/project-slug: dlopezby93/digital-femsa-gaia
-    asyncapi.io/documentation: './asyncapi.yaml'
+    asyncapi.io/documentation: './asyncapi.yaml' # Ruta al archivo asyncapi.yaml
 spec:
-  type: service
-  lifecycle: unknown
+  type: asyncapi
+  lifecycle: production
   owner: 11pili-rose
+
