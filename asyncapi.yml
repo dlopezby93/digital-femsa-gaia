@@ -1,0 +1,92 @@
+asyncapi: 3.0.0
+info:
+  title: Financial Services Event Bus
+  version: 1.0.0
+  description: This API handles events related to booking flights.
+servers:
+  production:
+    host: 'localhost:9092'
+    protocol: kafka
+    description: Apache Kafka broker
+
+channels:
+  flight/booked:
+    address: flight/booked
+    messages:
+      subscribe.message:
+        $ref: '#/components/messages/FlightBookedEvent'
+    description: Topic for flight booked events
+  flight/searched:
+    address: flight/searched
+    messages:
+      publish.message:
+        $ref: '#/components/messages/FlightSearchedEvent'
+    description: Topic for flight searched events
+
+operations:
+  flight/booked.subscribe:
+    action: send
+    channel:
+      $ref: '#/channels/flight~1booked'
+    messages:
+      - $ref: '#/channels/flight~1booked/messages/subscribe.message'
+  flight/searched.publish:
+    action: receive
+    channel:
+      $ref: '#/channels/flight~1searched'
+    messages:
+      - $ref: '#/channels/flight~1searched/messages/publish.message'
+      
+components:
+  messages:
+    FlightBookedEvent:
+      name: FlightBookedEvent
+      title: Flight Booked Event
+      summary: Inform about a newly booked flight
+      payload:
+        type: object
+        properties:
+          userId:
+            type: string
+            format: uuid
+          flightId:
+            type: string
+            format: uuid
+          timestamp:
+            type: string
+            format: date-time
+    FlightSearchedEvent:
+      name: FlightSearchedEvent
+      title: Flight Searched Event
+      summary: Event triggered when a user searches for flights
+      payload:
+        type: object
+        properties:
+          userId:
+            type: string
+            format: uuid
+            description: The unique identifier of the user who made the search
+          searchParameters:
+            type: object
+            properties:
+              departureLocation:
+                type: string
+                description: IATA code for the departure airport
+              arrivalLocation:
+                type: string
+                description: IATA code for the arrival airport
+              departureDate:
+                type: string
+                format: date
+                description: The date of departure
+              returnDate:
+                type: string
+                format: date
+                description: The date of return (for round trips)
+              numberOfPassengers:
+                type: integer
+                description: The number of passengers
+          timestamp:
+            type: string
+            format: date-time
+            description: The time at which the search was performed
