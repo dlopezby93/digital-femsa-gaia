@@ -4,7 +4,7 @@ metadata:
   name: digital-femsa-gaia
   annotations:
     github.com/project-slug: dlopezby93/digital-femsa-gaia
-    asyncapi.io/documentation: './asyncapi.yml'
+    asyncapi.io/documentation: './asyncapi.yaml'
 spec:
   type: other
   lifecycle: unknown
